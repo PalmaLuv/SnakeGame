@@ -79,10 +79,10 @@ void logic() {
 	}
 
 	for (int i = iteration; i >= 0; i--) {
-		if (i == 0) {
+		if (lenth_snake >= 1 && i == 0) {
 			body[0][0] = head[0][0]; body[0][1] = head[0][1];
 		}
-		else {
+		if (i > 0) {
 			body[i][0] = body[i - 1][0]; body[i][1] = body[i - 1][1];
 		}
 	}
@@ -102,9 +102,17 @@ void logic() {
 		head[0][0]--;
 		break;
 	}
+	for (int i = iteration; i >= 0; i--) {
+		if (body[i][0] == head[0][0] && body[i][1] == head[0][1]) {
+			game_over = true;
+		}
+	}
+	if (head[0][0] > map_size || head[0][0] < 0 || head[0][1] > map_size || head[0][1] < 0) {
+		game_over = true;
+	}
 }
 
-void dràw() {
+void drÐ°w() {
 	for (int i = 0; i < map_size + 2; i++) {
 		for (int j = 0; j < map_size + 2; j++) {
 
@@ -144,9 +152,10 @@ void dràw() {
 int main() {
 	preset();
 	while (game_over == false) {
-		dràw();
-		logic();
 		input();
+		logic();
+		drÐ°w();
 	}
+	std::cout << "-			GAME OVER			-";
 	return 0;
 }
